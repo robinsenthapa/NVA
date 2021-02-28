@@ -1,10 +1,11 @@
 package np.com.nva
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import np.com.nva.fragments.HomeFragment
+import np.com.nva.fragments.ReportFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         var navigation = findViewById<MeowBottomNavigation>(R.id.navigation)
         navigation.add(MeowBottomNavigation.Model(0, R.drawable.ic_home))
@@ -23,19 +25,24 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnClickMenuListener {
             when (it.id) {
                 0 -> {
-                    Toast.makeText(this@MainActivity, "Home Clicked", Toast.LENGTH_LONG).show()
+                    replaceFragment(HomeFragment())
+
                 }
                 1 -> {
-                    Toast.makeText(this@MainActivity, "Map Clicked", Toast.LENGTH_LONG).show()
+                    replaceFragment(np.com.nva.fragments.MapFragment())
                 }
                 2 -> {
-                    Toast.makeText(this@MainActivity, "Message Clicked", Toast.LENGTH_LONG).show()
+                    replaceFragment(ReportFragment())
                 }
             }
         }
 
-
     }
 
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentContainer = supportFragmentManager.beginTransaction()
+        fragmentContainer.replace(R.id.fragmentContainer, fragment)
+        fragmentContainer.commit()
+    }
 
 }
